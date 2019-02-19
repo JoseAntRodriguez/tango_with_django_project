@@ -28,7 +28,7 @@ def visitor_cookie_handler(request):
     last_visit_time = datetime.strptime(last_visit_cookie[:-7],
                                         '%Y-%m-%d %H:%M:%S')
     # If it's been more than a day since the last visit...
-    if(datetime.now() - last_visit_time).seconds > 0:
+    if(datetime.now() - last_visit_time).days > 0:
         visits = visits + 1
         # Update the last visit cookie now that we have updated the count
         request.session['last_visit'] = str(datetime.now())
@@ -149,6 +149,7 @@ def add_page(request, category_name_slug):
     context_dict={'form':form,'category': category}
     return render(request,'rango/add_page.html', context_dict)
 
+'''
 def register(request):
     # A boolean value for telling the template
     # whether the registration was successful.
@@ -208,7 +209,9 @@ def register(request):
                   {'user_form': user_form,
                    'profile_form': profile_form,
                    'registered': registered})
+'''
 
+'''
 def user_login(request):
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method=='POST':
@@ -244,19 +247,6 @@ def user_login(request):
             print("Invalid login details: {0}, {1}".format(username, password))
             #return HttpResponse("Invalid login details supplied.")
             problem = 'Invalid login details supplied.'
-            '''
-            names = UserProfile.objects.order_by('user')
-            UserNames = []
-            for name in names:
-                UserNames.append(name.user)
-                print(name.user)
-                print (username == name.user)
-            for name in UserNames:
-                if username == name:
-                    problem = 'Bad password'
-            else:
-                problem = 'Bad username'
-            '''
             return render(request,'rango/login.html',
                           {'problem': problem})
 
@@ -266,14 +256,17 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request,'rango/login.html', {})
+'''
 
 @login_required
 def restricted(request):
     return render(request,'rango/restricted.html', {})
 
+'''
 @login_required
 def user_logout(request):
     # Since we know the user is logged in, we can now just log them out.
     logout(request)
     # Take the user back to the homepage.
     return HttpResponseRedirect(reverse('index'))
+'''
